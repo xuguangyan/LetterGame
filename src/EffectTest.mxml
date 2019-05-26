@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="405" height="293">
+
+	<mx:Sequence id="sequenceEffect">
+		<mx:Blur id="beOut" blurXTo="50" blurYTo="50" duration="500" />
+		<mx:Move id="mv" xTo="0" yTo="0" duration="500" />
+		<mx:Blur id="beIn" blurXFrom="50" blurYFrom="50" blurXTo="0" blurYTo="0" duration="500" />
+	</mx:Sequence>
+	
+	<mx:Canvas>
+		<mx:Image source="media/img/girl01.png" x="138.5" y="80"
+	 	 mouseDownEffect="sequenceEffect"/>
+	</mx:Canvas>
+</mx:Application>

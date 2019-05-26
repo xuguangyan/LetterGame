@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml"  
+    xmlns:ds="com.dasheng.ui.*"   
+	layout="absolute"
+    frameRate="12"
+	width="900" height="500"
+	backgroundColor="#B4DBFA"
+	creationComplete="onCreationComplete()" 
+	enterFrame="onEnterFrame(event)"
+	mouseDown="onMouseDown(event)"
+	mouseUp="onMouseUp(event)"
+	currentState="Game">
+
+	<mx:Script source="LetterGame.as" />
+	<mx:Style>
+		Application { 
+		    font-size:16px; 
+		    font-style: normal; 
+		    font-weight: normal; 
+		}
+		.imgStle{
+			borderWidth:4;
+			borderAlpha:6;
+			borderColor:#FF0000;
+		}
+		.lblStyle{  
+			color:#0000FF;  
+			font-size:18px; 
+		} 
+		.lblCopyRight{  
+			fontSize:16;
+			fontStyle:italic;
+			color:#BA6411;
+			fontWeight:bold;
+		} 
+		.txtStyle{  
+			color:#0000FF;  
+			font-size:16px; 
+		} 
+	</mx:Style>
+	<!--加减分效果-->
+	<mx:Sequence id="effScore" target="{mcNum}">
+		<mx:Parallel>
+			<mx:Fade alphaFrom="0" alphaTo="1" duration="500" />
+			<mx:Move xFrom="10" yFrom="70"  xTo="0" yTo="80" duration="500" />
+			<mx:Zoom zoomWidthFrom="0.1" zoomHeightFrom="0.1" zoomWidthTo="1" zoomHeightTo="1" duration="500" />
+		</mx:Parallel>
+		
+		<mx:Parallel>
+			<mx:Fade alphaFrom="1" alphaTo="0" duration="500" />
+			<mx:Move xFrom="0" yFrom="80" xTo="50" yTo="0" duration="500" />
+		</mx:Parallel>
+	</mx:Sequence>
+	
+	<!--背景效果-->
+	<mx:Parallel id="effBack">
+		<mx:Fade alphaFrom="1" alphaTo="0" duration="1000" />
+		<mx:Resize widthFrom="634" heightFrom="424" widthTo="0" heightTo="0" duration="1000" />
+		<mx:Move xFrom="180" yFrom="20" xTo="487" yTo="232" duration="1000" />
+	</mx:Parallel>
+	
+	<mx:states>
+		<!--游戏主界面-->
+		<mx:State name="Game">
+			<mx:AddChild>
+				<mx:Canvas id="GameCanvas" x="0" y="0" width="100%" height="100%" backgroundImage="media/img/GameMain.png">
+					<!--字母表格区-->
+					<mx:Canvas x="180" y="20" width="634" height="424" id="myCanvas" backgroundColor="#5095BD" backgroundImage="media/img/bg.png" backgroundAlpha="0.2"
+						 borderThickness="1" borderColor="#B35133" borderStyle="solid" />
+					<mx:Image id="imgBg" source="media/img/bg.png" x="180" y="20" width="634" height="424" />
+					<mx:UIComponent id="myUI" x="180" y="20" width="634" height="424">
+					</mx:UIComponent>
+
+					<!--Logo区-->
+					<ds:ImageEx id="myLogo"  x="21" y="28" source="media/img/logo_01.png" />
+					<ds:ImageEx id="myLogo2"  x="21" y="28" source="media/img/logo_02.png" visible="false" />
+					<!--<mx:Label id="myTitle" text="字母连连看" styleName="lblStyle"  x="38" y="172"/>-->
+					<mx:Image source="media/img/GameName.png" x="12" y="163" />
+					<mx:Button id="btnReset" x="38" y="208" label="点击开始" click="onBtnReset(event)" width="95" height="29" fontSize="16" fontWeight="bold"/>
+					
+					<!--分数榜-->
+					<mx:Label id="lbRight" text="正确：" styleName="lblStyle"  x="21" y="251"/>
+					<mx:Text id="txtRight" x="72" y="254" text="0" width="61" styleName="txtStyle"/>
+					<mx:Label id="lbWrong" text="失误：" styleName="lblStyle"  x="21" y="282"/>
+					<mx:Text id="txtWrong" x="72" y="285" text="0" width="61" styleName="txtStyle"/>
+					<mx:Label id="lbScore" text="得分：" styleName="lblStyle"  x="21" y="314"/>
+					<mx:Text id="txtScore" x="72" y="317" text="0" width="61" styleName="txtStyle"/>
+					
+					<!--音量控制区-->
+					<mx:Image id="imgAbout" x="10" y="354" source="media/img/About.png" click="onAboutClick(event)"/>
+					<mx:Image id="imgSound" x="81" y="354" source="media/img/Sound_On.png" click="onSoundClick(event)"/>
+					<mx:VSlider x="141" y="254" minimum="0" maximum="1" id="sldVolume" value="0.5" change="onVolumeChange(event)"/>
+					<mx:Label id="lbCopyRight" x="10" y="422" text="Designed by 大圣" styleName="lblCopyRight"/>
+					
+					<!--状态显示条-->
+					<mx:Label id="lbMsg" x="27" y="472" text="当前状态：声音开启" fontSize="14"/>
+					
+					<!--时间进度条-->
+					<mx:Label x="829" y="10" text="3分钟" styleName="lblStyle"/>
+					<mx:Image id="timeBar" x="819" y="34" source="media/img/TimeBar.png"/>
+					<mx:Box id="fileBar" x="847" y="56" width="23" height="360" backgroundColor="#B4DBFA"/>
+					<mx:HRule x="829" y="354" width="57" strokeColor="#FF0000" height="4"/>
+					
+					<!--加减分效果-->
+					<mx:Canvas id="mcScore" x="62" y="238" width="100" height="110">
+						<mx:Image id="mcNum" alpha="0" source="media/img/num+10.png" x="10" y="70"/>
+					</mx:Canvas>
+					
+				</mx:Canvas>
+			</mx:AddChild>
+		</mx:State>
+		
+		<!--关于界面-->
+		<mx:State name="About">
+			<mx:AddChild>
+				<mx:Canvas id="AboutCanvas" x="0" y="0" width="100%" height="100%" backgroundImage="media/img/GameAbout.png">
+					<mx:Label id="lbBack" x="30" y="369" width="88" height="51" click="onBtnBack(event)"/>
+				</mx:Canvas>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+</mx:Application>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>   
+<mx:Application    
+    xmlns:mx="http://www.adobe.com/2006/mxml"    
+    xmlns:ds="com.dasheng.ui.*"    
+    backgroundColor="#000000"  
+    layout="absolute">   
+       
+    <mx:Script>
+    	<![CDATA[
+    		import mx.controls.Alert;
+    		protected function onImgClick(event:MouseEvent):void
+    		{
+    			mx.controls.Alert.show(colorTool.selectedColor.toString());
+    		}
+    		protected function mouseOverHandler(event:MouseEvent):void{
+				this.setChildIndex(event.currentTarget as DisplayObject,this.numChildren-1);
+			}
+    	]]>
+    </mx:Script>
+	<mx:Style>
+		.imgStle{
+			borderWidth:2;
+			borderAlpha:6;
+			borderColor:#FF0000;
+		}
+		.lblStyle{  
+			color:#0000FF;  
+			font-size:18px; 
+		} 
+	</mx:Style>
+    <ds:ImageEx
+        borderAlpha="{aBar.value}"    
+        borderWidth="{wBar.value}"    
+        borderColor="{colorTool.selectedColor}"    
+        source="media/girl01.png"    
+        x="224" y="153" click="onImgClick(event)"
+        mouseOver="mouseOverHandler(event)" />   
+    <ds:ImageEx
+        borderAlpha="{aBar.value}"    
+        borderWidth="{wBar.value}"    
+        borderColor="{colorTool.selectedColor}"    
+        source="media/girl02.png"    
+        x="195" y="124" click="onImgClick(event)"
+        mouseOver="mouseOverHandler(event)" />  
+           
+    <mx:Label x="180" y="327" text="请选择边框颜色" color="#FDFDFD" fontSize="16"/>   
+    <mx:Label x="180" y="391" text="请选择边框宽度" color="#FDFDFD" fontSize="16"/>   
+    <mx:Label x="377" y="391" text="请选择边框透明度" color="#FDFDFD" fontSize="16"/>   
+       
+    <mx:ColorPicker x="305" y="327" color="#FDFDFD" id="colorTool"/>   
+    <mx:VSlider x="525" y="255" minimum="0" maximum="1" id="aBar" />   
+    <mx:HSlider x="180" y="423" minimum="0" maximum="6" id="wBar"/>
+           
+</mx:Application>
